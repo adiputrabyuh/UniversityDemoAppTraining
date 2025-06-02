@@ -1,20 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MySqlX.XDevAPI;
-//using SimpleUniversityDemo.Models;
-using SimpleUniversityDemo.Services;
+using UniversityDemoAppTraining.Models;
 using UniversityDemoAppTraining.Services;
-namespace SimpleUniversityDemo.Controllers
+namespace UniversityDemoAppTraining.Controllers
 
 {
     [ApiController]
     [Route("Controller")]
     public class StudentController : ControllerBase
     {
-        private readonly DbMySQLService _mySQLDB;
+        private readonly DbMySQLService _DbMySQLSevice;
         private readonly StudentService _studentService;
-        public StudentController(DbMySQLService mySQLDB, StudentService studentService)
+        public StudentController(DbMySQLService DbMySQLService, StudentService studentService)
         {
-            _mySQLDB = mySQLDB;
+            _DbMySQLSevice = DbMySQLService;
             _studentService = studentService;
         }
         [HttpGet]

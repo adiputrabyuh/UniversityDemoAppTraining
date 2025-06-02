@@ -2,10 +2,10 @@
 {
     public class Student
     {
-        public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public DateTime EnrollDate { get; set; }
+        public int id { get; set; }
+        public string first_name { get; set; }
+        public string last_name { get; set; }
+        public string email { get; set; }
+        public DateTime enrollment_date { get; set; }
     }
 }

@@ -13,11 +13,12 @@ namespace UniversityDemoAppTraining.Services
     public class DbMySQLService
 
     {
+
         private readonly string _connectionString;
 
         public DbMySQLService() {
                 string[] user = Environment.GetEnvironmentVariable("DB_INFORMATION").Split(':');
-                _connectionString = "server=localhost; userid=" + user[0] + "; password" + user[1] + "; database=universitydemoapp";
+                _connectionString = "server=localhost; userid=" + user[0] + "; password=" + user[1] + "; database=" + "universitydemoapp";
             }
 
         public MySqlConnection GetOpenMySqlConnection()
