@@ -54,6 +54,32 @@ namespace UniversityDemoAppTraining.Controllers
             }
         }
 
+        // PUT: api/Student/UpdateStudent
+        [HttpPut]
+        [Route("UpdateByID")]
+        public IActionResult UpdateStudent(int id, [FromBody] Student student)
+        {
+            bool isUpdated = _studentService.UpdateStudent(id, student.first_name, student.last_name, student.email);
+            if (!isUpdated)
+            {
+                return NotFound();
+            }
+            return Ok(student);
+        }
+
+        // DELETE: api/Student/DeleteByID
+        [HttpDelete]
+        [Route("DeletebyID")]
+        public IActionResult DeleteStudent(int id)
+        {
+            bool isDeleted = _studentService.DeleteStudent(id);
+            if (!isDeleted)
+            {
+                return NotFound();
+            }
+            return Ok();
+        }
+
 
     }
 }

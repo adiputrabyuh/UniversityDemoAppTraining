@@ -97,5 +97,40 @@ namespace UniversityDemoAppTraining.Services
 
             }
         }
+
+        // Update a student
+        public bool UpdateStudent(int id, string firstName, string lastName, string email)
+        {
+            using (MySqlConnection connection = GetOpenMySqlConnection())
+            {
+                string sql = "UPDATE student SET first_name = @first_name, last_name = @last_name, email = @email WHERE id = @id;";
+                using (MySqlCommand cmd = new MySqlCommand(sql, connection))
+                {
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@first_name", firstName);
+                    cmd.Parameters.AddWithValue("@last_name", lastName);
+                    cmd.Parameters.AddWithValue("@email", email);
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    return rowsAffected > 0;
+                }
+            }
+        }
+
+        //Delete a student
+        public bool DeleteStudent(int id)
+        {
+            using (MySqlConnection connection = GetOpenMySqlConnection())
+            {
+                string studentSql = "DELETE FROM student WHERE id = @id;";
+                using (MySqlCommand command = new MySqlCommand(studentSql, connection))
+                {
+                    command.Parameters.AddWithValue(@"id", id);
+                    int rowsAffected = command.ExecuteNonQuery();
+                    return rowsAffected > 0;
+                }
+            }
+        }
+
     }
 }
