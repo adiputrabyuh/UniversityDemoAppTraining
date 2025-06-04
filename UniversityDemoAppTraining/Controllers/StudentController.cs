@@ -29,9 +29,9 @@ namespace UniversityDemoAppTraining.Controllers
 
         // GET: api/Student/{id}
         [HttpGet("{id}")]
-        public IActionResult GetStudentById(int id)
+        public IActionResult GetStudentById(int student_id)
         {
-            var student = _studentService.GetByID(id);
+            var student = _studentService.GetByID(student_id);
             if (student == null)
                 return Ok();
             return Ok(student);
@@ -44,7 +44,7 @@ namespace UniversityDemoAppTraining.Controllers
         {
             try
             {
-                student.id = 0;
+                student.student_id = 0;
                 _studentService.AddStudent(student);
                 return Ok(student);
             }
@@ -57,9 +57,9 @@ namespace UniversityDemoAppTraining.Controllers
         // PUT: api/Student/UpdateStudent
         [HttpPut]
         [Route("UpdateByID")]
-        public IActionResult UpdateStudent(int id, [FromBody] Student student)
+        public IActionResult UpdateStudent(int student_id, [FromBody] Student student)
         {
-            bool isUpdated = _studentService.UpdateStudent(id, student.first_name, student.last_name, student.email);
+            bool isUpdated = _studentService.UpdateStudent(student_id, student.first_name, student.last_name, student.email);
             if (!isUpdated)
             {
                 return NotFound();
@@ -70,9 +70,9 @@ namespace UniversityDemoAppTraining.Controllers
         // DELETE: api/Student/DeleteByID
         [HttpDelete]
         [Route("DeletebyID")]
-        public IActionResult DeleteStudent(int id)
+        public IActionResult DeleteStudent(int student_id)
         {
-            bool isDeleted = _studentService.DeleteStudent(id);
+            bool isDeleted = _studentService.DeleteStudent(student_id);
             if (!isDeleted)
             {
                 return NotFound();

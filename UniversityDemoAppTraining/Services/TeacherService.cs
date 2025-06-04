@@ -13,7 +13,7 @@ namespace UniversityDemoAppTraining.Services
             List<Teacher> teachers = new List<Teacher>();
             using (MySqlConnection connection = GetOpenMySqlConnection())
             {
-                string teacherSql = "SELECT id, first_name, last_name, email FROM teacher;";
+                string teacherSql = "SELECT teacher_id, first_name, last_name, email FROM teacher;";
                 MySqlCommand cmd = new MySqlCommand(teacherSql, connection);
                 using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -21,7 +21,7 @@ namespace UniversityDemoAppTraining.Services
                     {
                         Teacher teacher = new Teacher()
                         {
-                            id = reader.GetInt32("id"),
+                            teacher_id = reader.GetInt32("teacher_id"),
                             first_name = reader.GetString("first_name"),
                             last_name = reader.GetString("last_name"),
                             email = reader.GetString("email"),
@@ -36,20 +36,20 @@ namespace UniversityDemoAppTraining.Services
         }
 
         // Get the teacher by Id
-        public Teacher? GetByID(int id)
+        public Teacher? GetByID(int teacher_id)
         {
             using (MySqlConnection connection = GetOpenMySqlConnection())
             {
-                string teacherSql = "SELECT id, first_name, last_name, email FROM teacher WHERE id = @id;";
+                string teacherSql = "SELECT teacher_id, first_name, last_name, email FROM teacher WHERE teacher_id = @teacher_id;";
                 MySqlCommand cmd = new MySqlCommand(teacherSql, connection);
-                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@teacher_id", teacher_id);
                 using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
                     if (reader.Read())
                     {
                         return new Teacher()
                         {
-                            id = reader.GetInt32("id"),
+                            teacher_id = reader.GetInt32("teacher_id"),
                             first_name = reader.GetString("first_name"),
                             last_name = reader.GetString("last_name"),
                             email = reader.GetString("email")
@@ -99,14 +99,14 @@ namespace UniversityDemoAppTraining.Services
         }
 
         // Update a teacher
-        public bool UpdateTeacher(int id, string firstName, string lastName, string email)
+        public bool UpdateTeacher(int teacher_id, string firstName, string lastName, string email)
         {
             using (MySqlConnection connection = GetOpenMySqlConnection())
             {
-                string sql = "UPDATE teacher SET first_name = @first_name, last_name = @last_name, email = @email WHERE id = @id;";
+                string sql = "UPDATE teacher SET first_name = @first_name, last_name = @last_name, email = @email WHERE teacher_id = @teacher_id;";
                 using (MySqlCommand cmd = new MySqlCommand(sql, connection))
                 {
-                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@teacher_id", teacher_id);
                     cmd.Parameters.AddWithValue("@first_name", firstName);
                     cmd.Parameters.AddWithValue("@last_name", lastName);
                     cmd.Parameters.AddWithValue("@email", email);
@@ -118,14 +118,14 @@ namespace UniversityDemoAppTraining.Services
         }
 
         //Delete a teacher
-        public bool DeleteTeacher(int id)
+        public bool DeleteTeacher(int teacher_id)
         {
             using (MySqlConnection connection = GetOpenMySqlConnection())
             {
-                string teacherSql = "DELETE FROM teacher WHERE id = @id;";
+                string teacherSql = "DELETE FROM teacher WHERE teacher_id = @teacher_id;";
                 using (MySqlCommand command = new MySqlCommand(teacherSql, connection))
                 {
-                    command.Parameters.AddWithValue(@"id", id);
+                    command.Parameters.AddWithValue(@"teacher_id", teacher_id);
                     int rowsAffected = command.ExecuteNonQuery();
                     return rowsAffected > 0;
                 }

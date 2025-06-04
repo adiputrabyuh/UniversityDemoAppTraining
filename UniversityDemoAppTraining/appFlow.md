@@ -17,16 +17,17 @@
     3. Last Name
     4. Email
 
-### 3. Courses
+### 3. Course
     1. Id
     2. Course Name
+    3. Course Code
 
-### 4. Enrollments (Join to student/id)
+### 4. Enrollment
     1. Id
     2. Student Id
     3. Course Id
     4. Teacher Id
-    5. Grade
+    5. Grade (varchar)
 
 ---
 

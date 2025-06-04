@@ -13,7 +13,7 @@ namespace UniversityDemoAppTraining.Services
             List<Student> students = new List<Student>();
             using (MySqlConnection connection = GetOpenMySqlConnection())
             {
-                string studentSql = "SELECT id, first_name, last_name, email, enrollment_date FROM student;";
+                string studentSql = "SELECT student_id, first_name, last_name, email, enrollment_date FROM student;";
                 MySqlCommand cmd = new MySqlCommand(studentSql, connection);
                 using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -21,7 +21,7 @@ namespace UniversityDemoAppTraining.Services
                     {
                         Student student = new Student()
                         {
-                            id = reader.GetInt32("id"),
+                            student_id = reader.GetInt32("student_id"),
                             first_name = reader.GetString("first_name"),
                             last_name = reader.GetString("last_name"),
                             email = reader.GetString("email"),
@@ -36,20 +36,20 @@ namespace UniversityDemoAppTraining.Services
         }
 
         // Get the student by Id
-        public Student? GetByID(int id)
+        public Student? GetByID(int student_id)
         {
             using (MySqlConnection connection = GetOpenMySqlConnection())
             {
-                string studentSql = "SELECT id, first_name, last_name, email, enrollment_date FROM student WHERE id = @id;";
+                string studentSql = "SELECT student_id, first_name, last_name, email, enrollment_date FROM student WHERE student_id = @student_id;";
                 MySqlCommand cmd = new MySqlCommand(studentSql, connection);
-                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@student_id", student_id);
                 using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
                     if (reader.Read())
                     {
                         return new Student()
                         {
-                            id = reader.GetInt32("id"),
+                            student_id = reader.GetInt32("student_id"),
                             first_name = reader.GetString("first_name"),
                             last_name = reader.GetString("last_name"),
                             email = reader.GetString("email"),
@@ -99,14 +99,14 @@ namespace UniversityDemoAppTraining.Services
         }
 
         // Update a student
-        public bool UpdateStudent(int id, string firstName, string lastName, string email)
+        public bool UpdateStudent(int student_id, string firstName, string lastName, string email)
         {
             using (MySqlConnection connection = GetOpenMySqlConnection())
             {
-                string sql = "UPDATE student SET first_name = @first_name, last_name = @last_name, email = @email WHERE id = @id;";
+                string sql = "UPDATE student SET first_name = @first_name, last_name = @last_name, email = @email WHERE student_id = @student_id;";
                 using (MySqlCommand cmd = new MySqlCommand(sql, connection))
                 {
-                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@student_id", student_id);
                     cmd.Parameters.AddWithValue("@first_name", firstName);
                     cmd.Parameters.AddWithValue("@last_name", lastName);
                     cmd.Parameters.AddWithValue("@email", email);
@@ -118,14 +118,14 @@ namespace UniversityDemoAppTraining.Services
         }
 
         //Delete a student
-        public bool DeleteStudent(int id)
+        public bool DeleteStudent(int student_id)
         {
             using (MySqlConnection connection = GetOpenMySqlConnection())
             {
-                string studentSql = "DELETE FROM student WHERE id = @id;";
+                string studentSql = "DELETE FROM student WHERE student_id = @student_id;";
                 using (MySqlCommand command = new MySqlCommand(studentSql, connection))
                 {
-                    command.Parameters.AddWithValue(@"id", id);
+                    command.Parameters.AddWithValue(@"student_id", student_id);
                     int rowsAffected = command.ExecuteNonQuery();
                     return rowsAffected > 0;
                 }

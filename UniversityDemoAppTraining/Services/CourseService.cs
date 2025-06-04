@@ -13,7 +13,7 @@ namespace UniversityDemoAppTraining.Services
             List<Course> courses = new List<Course>();
             using (MySqlConnection connection = GetOpenMySqlConnection())
             {
-                string courseSql = "SELECT id, course_name, course_code FROM course;";
+                string courseSql = "SELECT course_id, course_name, course_code FROM course;";
                 MySqlCommand cmd = new MySqlCommand(courseSql, connection);
                 using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -21,7 +21,7 @@ namespace UniversityDemoAppTraining.Services
                     {
                         Course course = new Course()
                         {
-                            id = reader.GetInt32("id"),
+                            course_id = reader.GetInt32("course_id"),
                             course_name = reader.GetString("course_name"),
                             course_code = reader.GetString("course_code"),
                             //email = reader.GetString("email"),
@@ -36,20 +36,20 @@ namespace UniversityDemoAppTraining.Services
         }
 
         // Get the course by Id
-        public Course? GetByID(int id)
+        public Course? GetByID(int course_id)
         {
             using (MySqlConnection connection = GetOpenMySqlConnection())
             {
-                string courseSql = "SELECT id, course_name, course_code FROM course WHERE id = @id;";
+                string courseSql = "SELECT course_id, course_name, course_code FROM course WHERE course_id = @course_id;";
                 MySqlCommand cmd = new MySqlCommand(courseSql, connection);
-                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@course_id", course_id);
                 using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
                     if (reader.Read())
                     {
                         return new Course()
                         {
-                            id = reader.GetInt32("id"),
+                            course_id = reader.GetInt32("course_id"),
                             course_name = reader.GetString("course_name"),
                             course_code = reader.GetString("course_code"),
                             //email = reader.GetString("email")
@@ -99,14 +99,14 @@ namespace UniversityDemoAppTraining.Services
         }
 
         // Update a course
-        public bool UpdateCourse(int id, string courseName, string courseCode)
+        public bool UpdateCourse(int course_id, string courseName, string courseCode)
         {
             using (MySqlConnection connection = GetOpenMySqlConnection())
             {
-                string sql = "UPDATE course SET course_name = @course_name, course_code = @course_code WHERE id = @id;";
+                string sql = "UPDATE course SET course_name = @course_name, course_code = @course_code WHERE course_id = @course_id;";
                 using (MySqlCommand cmd = new MySqlCommand(sql, connection))
                 {
-                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@course_id", course_id);
                     cmd.Parameters.AddWithValue("@course_name", courseName);
                     cmd.Parameters.AddWithValue("@course_code", courseCode);
                     //cmd.Parameters.AddWithValue("@email", email);
@@ -118,14 +118,14 @@ namespace UniversityDemoAppTraining.Services
         }
 
         //Delete a course
-        public bool DeleteCourse(int id)
+        public bool DeleteCourse(int course_id)
         {
             using (MySqlConnection connection = GetOpenMySqlConnection())
             {
-                string courseSql = "DELETE FROM course WHERE id = @id;";
+                string courseSql = "DELETE FROM course WHERE course_id = @course_id;";
                 using (MySqlCommand command = new MySqlCommand(courseSql, connection))
                 {
-                    command.Parameters.AddWithValue(@"id", id);
+                    command.Parameters.AddWithValue(@"course_id", course_id);
                     int rowsAffected = command.ExecuteNonQuery();
                     return rowsAffected > 0;
                 }
