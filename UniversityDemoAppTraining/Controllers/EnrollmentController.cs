@@ -34,29 +34,33 @@ namespace UniversityDemoAppTraining.Controllers
             return enrollment == null ? Ok() : Ok(enrollment);
         }
 
-        //[HttpPost]
-        //[Route("AddEnrollment")]
-        //public IActionResult AddEnrollment([FromBody] Enrollment enrollment)
-        //{
-        //    try
-        //    {
-        //        enrollment.EnrollmentID = 0;
-        //        _enrollmentService.AddEnrollment(enrollment);
-        //        return CreatedAtAction(nameof(AddEnrollment), new { id = enrollment.EnrollmentID }, enrollment);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(500, ex.Message);
-        //    }
-        //}
+        [HttpPost]
+        [Route("AddEnrollment")]
+        public IActionResult AddEnrollment([FromBody] Enrollment enrollment)
+        {
+            try
+            {
+                enrollment.enrollment_id = 0;
+                bool success = _enrollmentService.AddEnrollment(enrollment);
+                if (!success)
+                {
+                    return BadRequest("Invalid student_id, course_id, or teacher_id.");
+                }
+                return Ok(enrollment);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
 
-        //[HttpPut]
-        //[Route("UpdateEnrollment")]
-        //public IActionResult UpdateEnrolment(int id, [FromBody] Enrollment enrollment)
-        //{
-        //    bool isUpdated = _enrollmentService.UpdateEnrollment(id, enrollment.EnrollmentDate, enrollment.EnrollmentStatus, enrollment.GPA, enrollment.StudentID, enrollment.CourseID);
-        //    return isUpdated ? Ok(enrollment) : NotFound();
-        //}
+        [HttpPut]
+        [Route("UpdateEnrollment")]
+        public IActionResult UpdateEnrolment(int id, [FromBody] Enrollment enrollment)
+        {
+            bool isUpdated = _enrollmentService.UpdateEnrollment(id, enrollment.student_id, enrollment.course_id, enrollment.teacher_id, enrollment.grade);
+            return isUpdated ? Ok(enrollment) : NotFound();
+        }
 
         [HttpDelete]
         public IActionResult DeleteEnrollment(int id)

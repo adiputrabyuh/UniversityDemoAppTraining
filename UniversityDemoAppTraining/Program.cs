@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<StudentService>();
 builder.Services.AddSingleton<TeacherService>();
 builder.Services.AddSingleton<CourseService>();
+builder.Services.AddSingleton<EnrollmentService>();
 builder.Services.AddScoped<DbMySQLService>();
 
 
